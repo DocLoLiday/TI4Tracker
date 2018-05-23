@@ -16,21 +16,24 @@ class Home extends React.Component {
     return (
       <ImageBackground style={styles.container} source={require('../../assets/images/backgrounds/bluespace.jpg')}>
         <View style={styles.components}>
-          <ComponentButton children={"Objectives"}></ComponentButton>
-          <ComponentButton children={"Actions"}></ComponentButton>
-          <ComponentButton children={"Tech"}></ComponentButton>
-          <ComponentButton children={"Promissory"}></ComponentButton>
+          <ComponentButton children={"Objectives"} onPress={this.goToScreen}></ComponentButton>
+          <ComponentButton children={"Actions"} onPress={this.goToScreen}></ComponentButton>
+          <ComponentButton children={"Tech"} onPress={this.goToScreen}></ComponentButton>
+          <ComponentButton children={"Promissory"} onPress={this.goToScreen}></ComponentButton>
         </View>
         <View style={styles.components}>
-          <ActionButton children={"Attack"}></ActionButton>
-          <ActionButton children={"Defend"}></ActionButton>
+          <ActionButton children={"Attack"} onPress={this.goToScreen}></ActionButton>
+          <ActionButton children={"Defend"} onPress={this.goToScreen}></ActionButton>
         </View>
         <View style={styles.components}>
-          <ActionButton children={"Produce"}></ActionButton>
-          <ActionButton children={"Spend"}></ActionButton>
+          <ActionButton children={"Produce"} onPress={this.goToScreen}></ActionButton>
+          <ActionButton children={"Spend"} onPress={this.goToScreen}></ActionButton>
         </View>
       </ImageBackground>
     );
+  }
+  goToScreen(e){
+
   }
 }
 

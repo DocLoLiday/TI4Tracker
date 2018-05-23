@@ -16,7 +16,7 @@ class ActionButton extends Component {
 
     render() {
         return (
-            <ImageBackground style={styles.container} source={require('../../assets/images/backgrounds/hexagon.jpg')}>
+            <ImageBackground style={styles.container} source={require('../../assets/images/backgrounds/hexagon.png')}>
                 <TouchableHighlight
                     onPress={this.props.onPress}
                     style={styles.button}>
@@ -25,63 +25,29 @@ class ActionButton extends Component {
                     </Text>
                 </TouchableHighlight>
             </ImageBackground>
-            // <View style={styles.container}>
-            //     <View style={styles.hexagon}>
-            //         <View style={styles.hexagonInner} />
-            //         <View style={styles.hexagonBefore} />
-            //         <View style={styles.hexagonAfter} />
-            //     </View>
-            // </View>
         );
     }
 }
 
 var styles = StyleSheet.create({
     container: {
-        margin: 15,
-        flex: 1
+        flex: 1,
+        height: 175,
+        width: 175
     },
-    hexagon: {
-        width: 180,
-        height: 100
+    button: {
+        flex: 1,
+        padding: 5,
+        alignSelf: 'stretch',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
-    hexagonInner: {
-        width: 180,
-        height: 100,
-        backgroundColor: 'blue',
-        borderLeftWidth: 5,
-        borderRightWidth: 5,
-        borderLeftColor: "#00b9ff",
-        borderRightColor: "#00b9ff"
-    },
-    hexagonAfter: {
-        position: 'absolute',
-        bottom: -50,
-        left: 0,
-        width: 0,
-        height: 0,
-        borderStyle: 'solid',
-        borderLeftWidth: 90,
-        borderLeftColor: 'transparent',
-        borderRightWidth: 90,
-        borderRightColor: 'transparent',
-        borderTopWidth: 50,
-        borderTopColor: 'blue'
-    },
-    hexagonBefore: {
-        position: 'absolute',
-        top: -50,
-        left: 0,
-        width: 0,
-        height: 0,
-        borderStyle: 'solid',
-        borderLeftWidth: 90,
-        borderLeftColor: 'transparent',
-        borderRightWidth: 90,
-        borderRightColor: 'transparent',
-        borderBottomWidth: 50,
-        borderBottomColor: 'blue',
-    }
+    text:
+        {
+            color: '#FFF',
+            fontWeight: "bold",
+            fontSize: 16
+        }
 });
 
 module.exports = ActionButton;
