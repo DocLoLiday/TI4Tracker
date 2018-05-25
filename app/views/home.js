@@ -12,28 +12,28 @@ import ComponentButton from '../components/componentButton';
 import ActionButton from '../components/actionButton';
 
 class Home extends React.Component {
-  render() {
+  render = () => {
     return (
       <ImageBackground style={styles.container} source={require('../../assets/images/backgrounds/bluespace.jpg')}>
         <View style={styles.components}>
-          <ComponentButton children={"Objectives"} onPress={this.goToScreen}></ComponentButton>
-          <ComponentButton children={"Actions"} onPress={this.goToScreen}></ComponentButton>
-          <ComponentButton children={"Tech"} onPress={this.goToScreen}></ComponentButton>
-          <ComponentButton children={"Promissory"} onPress={this.goToScreen}></ComponentButton>
+          <ComponentButton name={"Objectives"} onPress={this.goToScreen}></ComponentButton>
+          <ComponentButton name={"Actions"} onPress={this.goToScreen}></ComponentButton>
+          <ComponentButton name={"Tech"} onPress={this.goToScreen}></ComponentButton>
+          <ComponentButton name={"Promissory"} onPress={this.goToScreen}></ComponentButton>
         </View>
         <View style={styles.components}>
-          <ActionButton children={"Attack"} onPress={this.goToScreen}></ActionButton>
-          <ActionButton children={"Defend"} onPress={this.goToScreen}></ActionButton>
+          <ActionButton name={"Attack"} onPress={this.goToScreen}></ActionButton>
+          <ActionButton name={"Defend"} onPress={this.goToScreen}></ActionButton>
         </View>
         <View style={styles.components}>
-          <ActionButton children={"Produce"} onPress={this.goToScreen}></ActionButton>
-          <ActionButton children={"Spend"} onPress={this.goToScreen}></ActionButton>
+          <ActionButton name={"Produce"} onPress={this.goToScreen}></ActionButton>
+          <ActionButton name={"Spend"} onPress={this.goToScreen}></ActionButton>
         </View>
       </ImageBackground>
     );
   }
-  goToScreen(e){
-
+  goToScreen = (screen) => {
+    this.props.navigation.navigate(screen);
   }
 }
 

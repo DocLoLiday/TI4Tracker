@@ -1,5 +1,7 @@
 import React from 'react';
-import { ImageBackground,
+import { 
+  AsyncStorage,
+  ImageBackground,
   StyleSheet, 
   Text, 
   TouchableHighlight,
@@ -12,15 +14,32 @@ class Networking extends React.Component {
           <View style={styles.titlecontainer}>
             <Text style={styles.text}>Twilight Imperium Tracker</Text>
           </View>
-          <TouchableHighlight style={styles.button} onPress={this.goHome}>
+          <TouchableHighlight style={styles.button} onPress={this.goForth}>
             <Text style={styles.text}>Proceed</Text>
+          </TouchableHighlight>
+          <TouchableHighlight style={styles.button} onPress={this.clearStorage}>
+            <Text style={styles.text}>Clear Storage</Text>
           </TouchableHighlight>
       </ImageBackground>
     );
   }
 
-  goHome = () => {
-    this.props.navigation.navigate('Home')
+  goForth = () => {
+    var ref = this;
+    AsyncStorage.getItem("faction").then((value) => {
+      if(!value)
+        ref.props.navigation.navigate('FactionSelect');
+      else
+        ref.props.navigation.navigate('Home');
+    })
+    .catch((error) => {
+      ref.props.navigation.navigate('FactionSelect');
+    });
+    
+  }
+
+  clearStorage = () => {
+    AsyncStorage.clear();
   }
 }
 
@@ -32,13 +51,13 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "white",
-    fontFamily: "juna",
     fontSize: 24,
     padding: 15
   },
   button: {
     borderRadius: 10,
-    backgroundColor: "navy"
+    backgroundColor: "navy",
+    margin: 15
   },
   titlecontainer: {
     marginBottom: 25,

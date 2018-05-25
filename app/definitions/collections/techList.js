@@ -1,12 +1,13 @@
 //Models
 import TechModel from '../../models/techModel';
-import PrereqModel from '../../models/prereqhModel';
-import AbilityModel from '../../models/abilityhModel';
+import PrereqModel from '../../models/prereqModel';
+import AbilityModel from '../../models/abilityModel';
 //Definitions
 import AbilityTypes from '../abilityTypes';
 import TechTypes from '../techTypes';
 
-var TechList = [
+
+ var TechArray = [
 		new TechModel("AntiMassDeflectors", "AntiMass Deflectors", 
 		[
             new AbilityModel("Move into and through asteroid fields", [AbilityTypes.Move]),
@@ -103,7 +104,7 @@ var TechList = [
 		true),
 		new TechModel("PlasmaScoring", "Plasma Scoring",
 		[
-			new AbilityModel("When 1 or more units uses Bombard or Space Cannon, 1 unit may roll +1 die", [AbilityTypes.Attack, AbilityTypes,Defend])
+			new AbilityModel("When 1 or more units uses Bombard or Space Cannon, 1 unit may roll +1 die", [AbilityTypes.Attack, AbilityTypes.Defend])
 		],
 		[],
 		TechTypes.Warfare),
@@ -443,7 +444,7 @@ var TechList = [
 		TechTypes.Cybernetic,
 		false,
 		true),
-		new TechModel("SpecialConduitCylinder", "Special Conduit Cylinder",
+		new TechModel("SpacialConduitCylinder", "Spacial Conduit Cylinder",
 		[
 			new AbilityModel("After you activate a system that contains your unit(s), that system is now adjacent to all other systems that contain your unit(s)", [AbilityTypes.Attack])
 		],
@@ -538,6 +539,12 @@ var TechList = [
 		TechTypes.Biotic,
 		false,
 		true),
-	];
+	]
 
+	var TechList = {
+		TechArray: TechArray,
+		get: function(techName) {
+			return TechArray.find(f => f.Name === techName);
+		}
+	}
 module.exports = TechList;

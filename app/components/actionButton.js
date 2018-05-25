@@ -14,19 +14,24 @@ class ActionButton extends Component {
         super(props);
     }
 
-    render() {
+    render = () => {
         return (
             <ImageBackground style={styles.container} source={require('../../assets/images/backgrounds/hexagon.png')}>
                 <TouchableHighlight
-                    onPress={this.props.onPress}
+                    onPress={this.onPress}
                     style={styles.button}>
                     <Text style={styles.text}>
-                        {this.props.children}
+                        {this.props.name}
                     </Text>
                 </TouchableHighlight>
             </ImageBackground>
         );
     }
+
+    onPress = () => {
+        this.props.onPress(this.props.name)
+    }
+
 }
 
 var styles = StyleSheet.create({

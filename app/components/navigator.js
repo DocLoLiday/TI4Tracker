@@ -8,11 +8,15 @@ import {
 } from 'react-navigation';
 
 import Networking from '../views/networking';
+import FactionSelect from '../views/factionSelect';
 import Home from '../views/home';
+import Tech from '../views/componentScreens/tech';
 
 const Navigator = StackNavigator({
     Networking: { screen: Networking },
+    FactionSelect: { screen: FactionSelect },
     Home: { screen: Home },
+    Tech: { screen: Tech },
 },
 {
     headerMode: 'none',

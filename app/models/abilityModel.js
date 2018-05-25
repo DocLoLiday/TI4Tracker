@@ -1,6 +1,6 @@
 class AbilityModel {
     constructor(text, abilityTypes) {
-        this.Text = type;
+        this.Text = text;
         this.AbilityTypes = abilityTypes;
     }
 }

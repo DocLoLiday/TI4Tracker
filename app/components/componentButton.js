@@ -17,14 +17,18 @@ class ComponentButton extends Component {
         return (
             <ImageBackground style={styles.container} source={require('../../assets/images/backgrounds/componentBackground.png')}>
                 <TouchableHighlight
-                    onPress={this.props.onPress}
+                    onPress={this.onPress}
                     style={styles.button}>
                     <Text style={styles.text}>
-                        {this.props.children}
+                        {this.props.name}
                     </Text>
                 </TouchableHighlight>
             </ImageBackground>
         );
+    }
+
+    onPress = () => {
+        this.props.onPress(this.props.name)
     }
 }
 
