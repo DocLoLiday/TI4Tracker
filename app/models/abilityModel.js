@@ -1,7 +1,7 @@
 class AbilityModel {
-    constructor(text, abilityTypes) {
+    constructor(text, actionTypes) {
         this.Text = text;
-        this.AbilityTypes = abilityTypes;
+        this.ActionTypes = actionTypes;
     }
 }
 

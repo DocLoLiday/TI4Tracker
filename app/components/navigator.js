@@ -11,12 +11,16 @@ import Networking from '../views/networking';
 import FactionSelect from '../views/factionSelect';
 import Home from '../views/home';
 import Tech from '../views/componentScreens/tech';
+import Objectives from '../views/componentScreens/objectives';
+import AvailableObjectives from '../views/componentScreens/availableObjectives';
 
 const Navigator = StackNavigator({
     Networking: { screen: Networking },
     FactionSelect: { screen: FactionSelect },
     Home: { screen: Home },
     Tech: { screen: Tech },
+    Objectives: { screen: Objectives },
+    AvailableObjectives: { screen: AvailableObjectives },
 },
 {
     headerMode: 'none',

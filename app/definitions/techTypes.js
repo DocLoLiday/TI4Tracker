@@ -1,7 +1,7 @@
 var TechTypes = {
-    Propulsion: 1,
+    Biotic: 1,
     Cybernetic: 2,
-    Biotic: 3,
+    Propulsion: 3,
     Warfare: 4,
     Unit: 5
 };

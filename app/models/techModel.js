@@ -7,6 +7,7 @@ class TechModel {
         this.Type = type;
         this.Exhaust = exhaust;
         this.Faction = faction;
+        this.PrereqCount = prereqs.length;
     }
 }
 

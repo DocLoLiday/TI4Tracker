@@ -53,6 +53,9 @@ class Tech extends React.Component {
                         break;
                 }
             });
+
+            techAvailable = techAvailable.sort(ref.orderByProperty('Type', 'PrereqCount'));
+            techOwned = techOwned.sort(ref.orderByProperty('Type', 'PrereqCount'));
             ref.setState({
                 techOwned: techOwned,
                 techAvailable: techAvailable,
@@ -63,6 +66,11 @@ class Tech extends React.Component {
             });
         });
     }
+
+    componentWillUnmount = () => {
+        AsyncStorage.multiSet([["tech_owned", JSON.stringify(this.state.techOwned)], ["tech_available", JSON.stringify(this.state.techAvailable)]]);
+    }
+
     render = () => {
         return (
             <ImageBackground style={styles.container} source={require('../../../assets/images/backgrounds/bluespace.jpg')}>
@@ -91,6 +99,7 @@ class Tech extends React.Component {
     }
 
     renderTechList = (type) => {
+        var ref = this;
         var techViews = [];
         switch(type) {
             case "Affordable":
@@ -102,10 +111,10 @@ class Tech extends React.Component {
             case "Owned":
                 techViews = this.state.techOwned.map((tech) => {
                     return (
-                        <TechButton key={tech.Name} tech={tech}>
+                        <TechButton key={tech.Name} tech={tech} onPress={ref.removeTech}>
                         </TechButton>
                     );
-                });;
+                });
                 break;
         }
         return techViews;
@@ -145,11 +154,61 @@ class Tech extends React.Component {
 
         return availableTech.map((tech) => {
             return (
-                <TechButton key={tech.Name} tech={tech}>
+                <TechButton key={tech.Name} tech={tech} onPress={getAffordable ? ref.addTech : null}>
                 </TechButton>
             );
         });
     }
+
+    addTech = (tech) => {
+        var techAvailable = this.state.techAvailable.filter((availTech)=>{
+            return availTech.Name !== tech.Name;
+        });
+        var techOwned = this.state.techOwned;
+        techOwned.push(tech);
+
+        techAvailable = techAvailable.sort(this.orderByProperty('Type', 'PrereqCount'));
+        techOwned = techOwned.sort(this.orderByProperty('Type', 'PrereqCount'));
+        this.setState({
+            techAvailable: techAvailable,
+            techOwned: techOwned,
+            bioticCount: tech.Type === TechTypes.Biotic ? this.state.bioticCount + 1 : this.state.bioticCount,
+            cyberneticCount: tech.Type === TechTypes.Cybernetic ? this.state.cyberneticCount + 1 : this.state.cyberneticCount,
+            propulsionCount: tech.Type === TechTypes.Propulsion ? this.state.propulsionCount + 1 : this.state.propulsionCount,
+            warfareCount: tech.Type === TechTypes.Warfare ? this.state.warfareCount + 1 : this.state.warfareCount
+        });
+    }
+
+    removeTech = (tech) => {
+        var techAvailable = this.state.techAvailable;
+        techAvailable.push(tech);
+        var techOwned = this.state.techOwned.filter((ownedTech)=>{
+            return ownedTech.Name !== tech.Name;
+        });
+
+        techAvailable = techAvailable.sort(this.orderByProperty('Type', 'PrereqCount'));
+        techOwned = techOwned.sort(this.orderByProperty('Type', 'PrereqCount'));
+        this.setState({
+            techAvailable: techAvailable,
+            techOwned: techOwned,
+            bioticCount: tech.Type === TechTypes.Biotic ? this.state.bioticCount - 1 : this.state.bioticCount,
+            cyberneticCount: tech.Type === TechTypes.Cybernetic ? this.state.cyberneticCount - 1 : this.state.cyberneticCount,
+            propulsionCount: tech.Type === TechTypes.Propulsion ? this.state.propulsionCount - 1 : this.state.propulsionCount,
+            warfareCount: tech.Type === TechTypes.Warfare ? this.state.warfareCount - 1 : this.state.warfareCount
+        });
+    }
+
+    orderByProperty = (prop) => {
+        var ref = this;
+        var args = Array.prototype.slice.call(arguments, 1);
+        return function (a, b) {
+          var equality = a[prop] - b[prop];
+          if (equality === 0 && arguments.length > 1) {
+            return ref.orderByProperty.apply(null, args)(a, b);
+          }
+          return equality;
+        };
+      }
 }
 
 const styles = StyleSheet.create({

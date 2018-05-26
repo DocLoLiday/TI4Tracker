@@ -56,7 +56,8 @@ class TechButton extends Component {
     }
 
     onPress = () => {
-        this.props.onPress(this.props.tech);
+        if(typeof this.props.onPress === "function")
+            this.props.onPress(this.props.tech);
     }
 }
 

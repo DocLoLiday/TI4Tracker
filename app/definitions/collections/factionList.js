@@ -2,7 +2,7 @@
 import FactionModel from '../../models/factionModel';
 import AbilityModel from '../../models/abilityModel';
 //Definitions
-import AbilityTypes from '../abilityTypes';
+import ActionTypes from '../actionTypes';
 //Collections
 import TechList from './techList';
 
