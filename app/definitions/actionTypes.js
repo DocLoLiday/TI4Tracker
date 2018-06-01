@@ -6,7 +6,8 @@ var ActionTypes = {
     Tech: 5,
     StrategyPhase: 6,
     StatusPhase: 7,
-    Action: 8
+    ActionPhase: 8,
+    Action: 9
 };
 
 module.exports = ActionTypes;
