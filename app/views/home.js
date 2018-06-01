@@ -9,7 +9,7 @@ import {
 
 
 import ComponentButton from '../components/componentButton';
-import ActionButton from '../components/actionButton';
+import TacticButton from '../components/tacticButton';
 
 class Home extends React.Component {
   render = () => {
@@ -22,12 +22,12 @@ class Home extends React.Component {
           <ComponentButton name={"Promissory"} onPress={this.goToScreen}></ComponentButton>
         </View>
         <View style={styles.components}>
-          <ActionButton name={"Attack"} onPress={this.goToScreen}></ActionButton>
-          <ActionButton name={"Defend"} onPress={this.goToScreen}></ActionButton>
+          <TacticButton name={"Attack"} onPress={this.goToScreen}></TacticButton>
+          <TacticButton name={"Defend"} onPress={this.goToScreen}></TacticButton>
         </View>
         <View style={styles.components}>
-          <ActionButton name={"Produce"} onPress={this.goToScreen}></ActionButton>
-          <ActionButton name={"Spend"} onPress={this.goToScreen}></ActionButton>
+          <TacticButton name={"Produce"} onPress={this.goToScreen}></TacticButton>
+          <TacticButton name={"Spend"} onPress={this.goToScreen}></TacticButton>
         </View>
       </ImageBackground>
     );

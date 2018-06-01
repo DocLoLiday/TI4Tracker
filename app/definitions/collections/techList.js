@@ -11,7 +11,7 @@ import TechTypes from '../techTypes';
 		new TechModel("AntiMassDeflectors", "AntiMass Deflectors", 
 		[
             new AbilityModel("Move into and through asteroid fields", [ActionTypes.Move]),
-            new AbilityModel("(-1) to Space Cannon rolls against you", [ActionTypes.Defend])
+            new AbilityModel("(-1) to Space Cannon rolls against you", [ActionTypes.Attack])
         ],
         [], 
         TechTypes.Propulsion),

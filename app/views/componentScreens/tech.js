@@ -111,7 +111,7 @@ class Tech extends React.Component {
             case "Owned":
                 techViews = this.state.techOwned.map((tech) => {
                     return (
-                        <TechButton key={tech.Name} tech={tech} onPress={ref.removeTech}>
+                        <TechButton key={tech.Name} tech={tech} onPress={ref.removeTech} showAllText={true}>
                         </TechButton>
                     );
                 });
@@ -154,7 +154,7 @@ class Tech extends React.Component {
 
         return availableTech.map((tech) => {
             return (
-                <TechButton key={tech.Name} tech={tech} onPress={getAffordable ? ref.addTech : null}>
+                <TechButton key={tech.Name} tech={tech} onPress={getAffordable ? ref.addTech : null} showAllText={true}>
                 </TechButton>
             );
         });

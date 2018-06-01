@@ -109,7 +109,7 @@ class Objectives extends React.Component {
                 if (objective.Type === type)
                     return (
                         <View key={objective.Name}>
-                            <ObjectiveButton key={objective.Name} objective={objective} onPress={ref.scoreObjective} onCancel={ref.removeObjective}>
+                            <ObjectiveButton objective={objective} onPress={ref.scoreObjective} onCancel={ref.removeObjective}>
                             </ObjectiveButton>
                         </View>
                     );

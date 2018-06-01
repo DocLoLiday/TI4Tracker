@@ -20,7 +20,7 @@ class ObjectiveButton extends Component {
     }
     componentDidMount = () => {
         var backgroundColor = "black";
-        switch(this.props.objective.Type){
+        switch (this.props.objective.Type) {
             case ObjectiveTypes.Public1:
                 backgroundColor = "orangered";
                 break;
@@ -40,7 +40,7 @@ class ObjectiveButton extends Component {
         return (
             <View style={styles.row}>
                 <View style={styles.container}>
-                    <View style={[{borderTopColor: this.state.backgroundColor}, styles.trapezoid]}>
+                    <View style={[{ borderTopColor: this.state.backgroundColor }, styles.trapezoid]}>
                     </View>
                     <TouchableHighlight
                         style={styles.button}
@@ -60,7 +60,7 @@ class ObjectiveButton extends Component {
         );
     }
     renderCancel = () => {
-        if(typeof this.props.onCancel === "function")
+        if (typeof this.props.onCancel === "function")
             return (
                 <TouchableHighlight style={styles.container} onPress={this.onCancel}>
                     <Text style={styles.titleText}>X</Text>
@@ -68,11 +68,11 @@ class ObjectiveButton extends Component {
             );
     }
     onPress = () => {
-        if(typeof this.props.onPress === "function")
+        if (typeof this.props.onPress === "function")
             this.props.onPress(this.props.objective);
     }
     onCancel = () => {
-        if(typeof this.props.onCancel === "function")
+        if (typeof this.props.onCancel === "function")
             this.props.onCancel(this.props.objective);
     }
 }
@@ -89,17 +89,17 @@ var styles = StyleSheet.create({
         position: 'absolute',
         padding: 45
     },
-    titleText:
-        {
-            color: 'white',
-            fontWeight: 'bold',
-            fontSize: 22
-        },
-        text:
-        {
-            color: 'white',
-            fontSize: 15
-        },
+    titleText: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 22,
+        textAlign: 'right'
+    },
+    text: {
+        color: 'white',
+        fontSize: 15,
+        textAlign: 'right'
+    },
     trapezoid: {
         width: 360,
         borderTopWidth: 75,
