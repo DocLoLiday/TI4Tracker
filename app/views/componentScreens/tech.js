@@ -54,8 +54,9 @@ class Tech extends React.Component {
                 }
             });
 
-            techAvailable = techAvailable.sort(ref.orderByProperty('Type', 'PrereqCount'));
-            techOwned = techOwned.sort(ref.orderByProperty('Type', 'PrereqCount'));
+            techAvailable = _.sortBy((_.sortBy(techAvailable, 'PrereqCount')), 'Type');
+            techOwned = _.sortBy((_.sortBy(techOwned, 'PrereqCount')), 'Type');
+
             ref.setState({
                 techOwned: techOwned,
                 techAvailable: techAvailable,
@@ -167,8 +168,8 @@ class Tech extends React.Component {
         var techOwned = this.state.techOwned;
         techOwned.push(tech);
 
-        techAvailable = techAvailable.sort(this.orderByProperty('Type', 'PrereqCount'));
-        techOwned = techOwned.sort(this.orderByProperty('Type', 'PrereqCount'));
+        techAvailable = _.sortBy((_.sortBy(techAvailable, 'PrereqCount')), 'Type');
+        techOwned = _.sortBy((_.sortBy(techOwned, 'PrereqCount')), 'Type');
         this.setState({
             techAvailable: techAvailable,
             techOwned: techOwned,
@@ -186,8 +187,8 @@ class Tech extends React.Component {
             return ownedTech.Name !== tech.Name;
         });
 
-        techAvailable = techAvailable.sort(this.orderByProperty('Type', 'PrereqCount'));
-        techOwned = techOwned.sort(this.orderByProperty('Type', 'PrereqCount'));
+        techAvailable = _.sortBy((_.sortBy(techAvailable, 'PrereqCount')), 'Type');
+        techOwned = _.sortBy((_.sortBy(techOwned, 'PrereqCount')), 'Type');
         this.setState({
             techAvailable: techAvailable,
             techOwned: techOwned,
@@ -197,18 +198,6 @@ class Tech extends React.Component {
             warfareCount: tech.Type === TechTypes.Warfare ? this.state.warfareCount - 1 : this.state.warfareCount
         });
     }
-
-    orderByProperty = (prop) => {
-        var ref = this;
-        var args = Array.prototype.slice.call(arguments, 1);
-        return function (a, b) {
-          var equality = a[prop] - b[prop];
-          if (equality === 0 && arguments.length > 1) {
-            return ref.orderByProperty.apply(null, args)(a, b);
-          }
-          return equality;
-        };
-      }
 }
 
 const styles = StyleSheet.create({

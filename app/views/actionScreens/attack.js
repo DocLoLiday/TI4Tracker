@@ -13,6 +13,7 @@ import ObjectiveButton from '../../components/objectiveButton';
 import ObjectiveTypes from '../../definitions/objectiveTypes';
 import TechButton from '../../components/techButton';
 import TechTypes from '../../definitions/techTypes';
+import ActionButton from '../../components/actionButton';
 import ActionTypes from '../../definitions/actionTypes';
 
 import _ from 'lodash';
@@ -24,6 +25,8 @@ class Attack extends React.Component {
         this.state = {
             objectivesPossible: [],
             objectivesScored: [],
+
+            actionsAvailable: [],
             actionsOwned: [],
 
             helpfulActions: [],
@@ -33,11 +36,12 @@ class Attack extends React.Component {
     }
     componentDidMount = () => {
         var ref = this;
-        AsyncStorage.multiGet(["objectives_possible", "objectives_scored", "tech_owned", "actions_owned"], (err, value) => {
+        AsyncStorage.multiGet(["objectives_possible", "objectives_scored", "tech_owned", "actions_owned", "actions_available"], (err, value) => {
             var data = _.fromPairs(value);
             var techOwned = JSON.parse(data["tech_owned"]);
             var objectivesPossible = JSON.parse(data["objectives_possible"]);
             var actionsOwned = JSON.parse(data["actions_owned"]);
+            var actionsAvailable = JSON.parse(data["actions_available"]);
             var objectivesScored = JSON.parse(data["objectives_scored"]);
 
             if (!techOwned)
@@ -46,6 +50,8 @@ class Attack extends React.Component {
                 objectivesPossible = [];
             if (!actionsOwned)
                 actionsOwned = [];
+            if (!actionsAvailable)
+                actionsAvailable = [];
             if (!objectivesScored)
                 objectivesScored = [];
 
@@ -53,7 +59,7 @@ class Attack extends React.Component {
             techOwned.forEach((tech) => {
                 var techText = "";
                 tech.Abilities.forEach((ability) => {
-                    if (ability.ActionTypes.indexOf(ActionTypes.Move.value) !== -1 || ability.ActionTypes.indexOf(ActionTypes.Attack.value))
+                    if (ability.ActionTypes.indexOf(ActionTypes.Move) !== -1 || ability.ActionTypes.indexOf(ActionTypes.Attack) !== -1)
                         techText += ability.Text + " ";
                 });
                 if (techText) {
@@ -63,18 +69,18 @@ class Attack extends React.Component {
             });
             var scorableObjectives = [];
             objectivesPossible.forEach((objective) => {
-                if (objective.ActionTypes.indexOf(ActionTypes.Attack.value))
+                if (objective.ActionTypes.indexOf(ActionTypes.Attack) !== -1)
                     scorableObjectives.push(objective);
             });
             var helpfulActions = [];
             actionsOwned.forEach((action) => {
-                if (action.ActionTypes.indexOf(ActionTypes.Attack.value))
+                if (action.ActionTypes.indexOf(ActionTypes.Attack) !== -1)
                     helpfulActions.push(action);
             });
 
-            helpfulTech = helpfulTech.sort(ref.orderByProperty('Type', 'Name'));
-            scorableObjectives = scorableObjectives.sort(ref.orderByProperty('Type', 'Name'));
-            actionsOwned = actionsOwned.sort(ref.orderByProperty('Name'));
+            helpfulTech = _.sortBy((_.sortBy(helpfulTech, 'Name')), 'Type');
+            scorableObjectives = _.sortBy((_.sortBy(scorableObjectives, 'Name')), 'Type');
+            helpfulActions = _.sortBy(helpfulActions, 'Name');
 
             this.setState({
                 //Attack Specific
@@ -84,7 +90,8 @@ class Attack extends React.Component {
                 //We will update these as obj scored, actions used
                 objectivesScored: objectivesScored,
                 objectivesPossible: objectivesPossible,
-                actionsOwned: actionsOwned
+                actionsOwned: actionsOwned,
+                actionsAvailable: actionsAvailable
             });
         });
     }
@@ -151,8 +158,33 @@ class Attack extends React.Component {
 
     renderActionList = () => {
         var ref = this;
-        return (null);
+        return this.state.helpfulActions.map((action) => {
+            return (
+                <View key={action.Name}>
+                    <ActionButton action={action} onPress={ref.discardAction}>
+                    </ActionButton>
+                </View>
+            );
+        });
     }
+
+    discardAction = (action) => {
+        var actionsOwned = this.state.actionsOwned.filter((ownedAction) => {
+            return ownedAction.Name !== action.Name;
+        });
+        var helpfulActions = this.state.helpfulActions.filter((helpfulAction) => {
+            return helpfulAction.Name !== action.Name;
+        });
+        var actionsAvailable = this.state.actionsAvailable;
+        actionsAvailable.push(action);
+        
+        this.setState({
+            actionsOwned: actionsOwned,
+            actionsAvailable: actionsAvailable,
+            helpfulActions: helpfulActions
+        })
+    }
+
 
     scoreObjective = (objective) => {
         var scorableObjectives = this.state.scorableObjectives.filter((scorableObjective) => {
@@ -174,26 +206,13 @@ class Attack extends React.Component {
     }
 
     goToScreen = (screen) => {
-        this.props.navigation.navigate(screen);
+        // this.setStorage();
+        // this.props.navigation.navigate(screen);
     }
 
     setStorage = () => {
-        AsyncStorage.multiSet([["objectives_possible", JSON.stringify(this.state.objectivesPossible)], ["objectives_scored", JSON.stringify(this.state.objectivesScored)], ["actions_owned", JSON.stringify(this.state.actionsOwned)]]);
+        AsyncStorage.multiSet([["objectives_possible", JSON.stringify(this.state.objectivesPossible)], ["objectives_scored", JSON.stringify(this.state.objectivesScored)], ["actions_owned", JSON.stringify(this.state.actionsOwned)], ["actions_available", JSON.stringify(this.state.actionsAvailable)]]);
     }
-
-    orderByProperty = (prop) => {
-        var ref = this;
-        var args = Array.prototype.slice.call(arguments, 1);
-        return function (a, b) {
-            var equality = a[prop] - b[prop];
-            if (equality === 0 && arguments.length > 1) {
-                return ref.orderByProperty.apply(null, args)(a, b);
-            }
-            return equality;
-        };
-    }
-
-
 }
 
 const styles = StyleSheet.create({

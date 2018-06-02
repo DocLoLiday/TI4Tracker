@@ -31,14 +31,14 @@ class Objectives extends React.Component {
             var objectivesScored = JSON.parse(data["objectives_scored"]);
             var objectivesPossible = JSON.parse(data["objectives_possible"]);
 
-            if(!objectivesScored)
+            if (!objectivesScored)
                 objectivesScored = [];
 
-            if(!objectivesPossible)
+            if (!objectivesPossible)
                 objectivesPossible = [];
 
-            objectivesScored = objectivesScored.sort(ref.orderByProperty('Type', 'Name'));
-            objectivesPossible = objectivesPossible.sort(ref.orderByProperty('Type', 'Name'));
+            objectivesPossible = _.sortBy((_.sortBy(objectivesPossible, 'Name')), 'Type');
+            objectivesScored = _.sortBy((_.sortBy(objectivesScored, 'Name')), 'Type');
 
             var score = 0;
             objectivesScored.forEach((objective) => {
@@ -60,10 +60,10 @@ class Objectives extends React.Component {
         //Dangerous! Can cause infinite loop. Need to find a better way.
         var ref = this;
         var passedObjective = this.props.navigation.state.params;
-        if(passedObjective){
+        if (passedObjective) {
             var objectivesPossible = this.state.objectivesPossible;
             objectivesPossible.push(passedObjective);
-            objectivesPossible = objectivesPossible.sort(ref.orderByProperty('Type', 'Name'));
+            objectivesPossible = _.sortBy(( _.sortBy(objectivesPossible, 'Name')), 'Type');
             this.props.navigation.state.params = null;
             this.setState({
                 objectivesPossible: objectivesPossible
@@ -128,14 +128,15 @@ class Objectives extends React.Component {
     }
 
     scoreObjective = (objective) => {
-        var objectivesPossible = this.state.objectivesPossible.filter((possibleObjective)=>{
+        var objectivesPossible = this.state.objectivesPossible.filter((possibleObjective) => {
             return possibleObjective.Name !== objective.Name;
         });
         var objectivesScored = this.state.objectivesScored;
         objectivesScored.push(objective);
 
-        objectivesPossible = objectivesPossible.sort(this.orderByProperty('Type'));
-        objectivesScored = objectivesScored.sort(this.orderByProperty('Type'));
+        objectivesPossible = _.sortBy((_.sortBy(objectivesPossible, 'Name')), 'Type');
+        objectivesScored = _.sortBy((_.sortBy(objectivesScored, 'Name')), 'Type');
+
         var score = this.state.score;
         score += objective.Points;
         this.setState({
@@ -146,14 +147,15 @@ class Objectives extends React.Component {
     }
 
     unScoreObjective = (objective) => {
-        var objectivesScored = this.state.objectivesScored.filter((scoredObjective)=>{
+        var objectivesScored = this.state.objectivesScored.filter((scoredObjective) => {
             return scoredObjective.Name !== objective.Name;
         });
         var objectivesPossible = this.state.objectivesPossible;
         objectivesPossible.push(objective);
 
-        objectivesPossible = objectivesPossible.sort(this.orderByProperty('Type'));
-        objectivesScored = objectivesScored.sort(this.orderByProperty('Type'));
+        objectivesPossible = _.sortBy((_.sortBy(objectivesPossible, 'Name')), 'Type');
+        objectivesScored = _.sortBy((_.sortBy(objectivesScored, 'Name')), 'Type');
+
         var score = this.state.score;
         score -= objective.Points;
         this.setState({
@@ -164,22 +166,22 @@ class Objectives extends React.Component {
     }
 
     removeObjective = (objective) => {
-        var scored = this.state.objectivesScored.filter((scoredObjective)=>{
+        var scored = this.state.objectivesScored.filter((scoredObjective) => {
             return scoredObjective.Name === objective.Name;
         }).length > 0;
 
-        var objectivesScored = this.state.objectivesScored.filter((scoredObjective)=>{
+        var objectivesScored = this.state.objectivesScored.filter((scoredObjective) => {
             return scoredObjective.Name !== objective.Name;
         });
-        var objectivesPossible = this.state.objectivesPossible.filter((possibleObjective)=>{
+        var objectivesPossible = this.state.objectivesPossible.filter((possibleObjective) => {
             return possibleObjective.Name !== objective.Name;
         });
 
-        objectivesPossible = objectivesPossible.sort(this.orderByProperty('Type'));
-        objectivesScored = objectivesScored.sort(this.orderByProperty('Type'));
+        objectivesPossible = _.sortBy((_.sortBy(objectivesPossible, 'Name')), 'Type');
+        objectivesScored = _.sortBy((_.sortBy(objectivesScored, 'Name')), 'Type');
 
         var score = this.state.score;
-        if(scored)
+        if (scored)
             score -= objective.Points;
 
         this.setState({
@@ -198,20 +200,6 @@ class Objectives extends React.Component {
         this.setStorage();
         this.props.navigation.navigate('AvailableObjectives');
     }
-
-    orderByProperty = (prop) => {
-        var ref = this;
-        var args = Array.prototype.slice.call(arguments, 1);
-        return function (a, b) {
-          var equality = a[prop] - b[prop];
-          if (equality === 0 && arguments.length > 1) {
-            return ref.orderByProperty.apply(null, args)(a, b);
-          }
-          return equality;
-        };
-      }
-
-
 }
 
 const styles = StyleSheet.create({

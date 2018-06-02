@@ -47,7 +47,7 @@ class AvailableObjectives extends React.Component {
                 return objectivesRevealed.indexOf(objective.Name) === -1;
               });
 
-            objectivesAvailable = objectivesAvailable.sort(ref.orderByProperty('Type', 'Name'));
+            objectivesAvailable = _.sortBy(( _.sortBy(objectivesAvailable, 'Name')), 'Type');
             ref.setState({
                 objectivesAvailable: objectivesAvailable,
                 objectivesPossible: objectivesPossible
@@ -85,20 +85,6 @@ class AvailableObjectives extends React.Component {
     addObjective = (objective) => {
         this.props.navigation.navigate('Objectives', objective);
     }
-
-    orderByProperty = (prop) => {
-        var ref = this;
-        var args = Array.prototype.slice.call(arguments, 1);
-        return function (a, b) {
-          var equality = a[prop] - b[prop];
-          if (equality === 0 && arguments.length > 1) {
-            return ref.orderByProperty.apply(null, args)(a, b);
-          }
-          return equality;
-        };
-      }
-
-    
 }
 
 const styles = StyleSheet.create({

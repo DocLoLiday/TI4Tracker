@@ -1,5 +1,5 @@
 class ActionModel {
-    constructor(name, text, type, actionTypes) {
+    constructor(name, text, actionTypes) {
         this.Name = name;
         this.Text = text;
         this.ActionTypes = actionTypes;

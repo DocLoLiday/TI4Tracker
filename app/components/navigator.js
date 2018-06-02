@@ -14,8 +14,8 @@ import Tech from '../views/componentScreens/tech';
 import Objectives from '../views/componentScreens/objectives';
 import AvailableObjectives from '../views/componentScreens/availableObjectives';
 import Attack from '../views/actionScreens/attack';
-// import Defend from '../views/actionScreens/defend';
-// import Actions from '../views/componentScreens/actions';
+import Defend from '../views/actionScreens/defend';
+import Actions from '../views/componentScreens/actions';
 
 const Navigator = StackNavigator({
     Networking: { screen: Networking },
@@ -25,8 +25,8 @@ const Navigator = StackNavigator({
     Objectives: { screen: Objectives },
     AvailableObjectives: { screen: AvailableObjectives },
     Attack: { screen: Attack },
-    // Defend: { screen: Defend },
-    // Actions: { screen: Actions },
+    Defend: { screen: Defend },
+    Actions: { screen: Actions }
 },
 {
     headerMode: 'none',
